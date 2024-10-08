@@ -11,19 +11,23 @@ import { CategoryDataSource } from './category-table-datasource';
   styleUrl: './category-list.component.scss',
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
-  dataSource!: MatTableDataSource<Category>;
-  private destroy$ = new Subject<void>();
-  displayedColumns: string[] = ['id', 'name', 'urlHandle', 'edit'];
   categories$?: Observable<Category[]>;
+  private destroy$ = new Subject<void>();
+
+  dataSource!: MatTableDataSource<Category>;
+  displayedColumns: string[] = ['id', 'name', 'urlHandle', 'edit'];
+
   constructor(private categoryService: CategoryService) {}
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAllCategories();
     this.categories$.pipe(takeUntil(this.destroy$)).subscribe((categories) => {
       this.dataSource = new CategoryDataSource(categories);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
