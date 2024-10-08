@@ -49,5 +49,32 @@ namespace ProgBlogAPI.Controllers
             };
             return Ok(response);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetBlogPosts()
+        {
+
+
+            var blogPosts = await BlogPostRepository.GetAllAsync();
+            //convert domain model back to DTO;
+            var response = new List<BlogPostDto>();
+            foreach (var blogPost in blogPosts)
+            {
+                response.Add(new BlogPostDto
+                {
+                    Id = blogPost.Id,
+                    Author = blogPost.Author,
+                    Title = blogPost.Title,
+                    ShortDescription = blogPost.ShortDescription,
+                    FeatureImageUrl = blogPost.FeatureImageUrl,
+                    UrlHandle = blogPost.UrlHandle,
+                    PublishedDate = blogPost.PublishedDate,
+                    IsVisible = blogPost.IsVisible,
+                    Content = blogPost.Content,
+                });
+                
+            }
+            return Ok(response);
+        }
     }
 }

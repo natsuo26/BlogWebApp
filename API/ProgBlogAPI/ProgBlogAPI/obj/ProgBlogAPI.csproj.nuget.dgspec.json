@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\projects\\Plog\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj": {}
+    "E:\\Projects\\BlogWebApp\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj": {}
   },
   "projects": {
-    "C:\\projects\\Plog\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj": {
+    "E:\\Projects\\BlogWebApp\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\projects\\Plog\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj",
+        "projectUniqueName": "E:\\Projects\\BlogWebApp\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj",
         "projectName": "ProgBlogAPI",
-        "projectPath": "C:\\projects\\Plog\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj",
-        "packagesPath": "C:\\Users\\u31d81\\.nuget\\packages\\",
-        "outputPath": "C:\\projects\\Plog\\API\\ProgBlogAPI\\ProgBlogAPI\\obj\\",
+        "projectPath": "E:\\Projects\\BlogWebApp\\API\\ProgBlogAPI\\ProgBlogAPI\\ProgBlogAPI.csproj",
+        "packagesPath": "C:\\Users\\abhay\\.nuget\\packages\\",
+        "outputPath": "E:\\Projects\\BlogWebApp\\API\\ProgBlogAPI\\ProgBlogAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u31d81\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\abhay\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

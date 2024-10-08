@@ -19,5 +19,10 @@ namespace ProgBlogAPI.Repositories.Implementation
             await this.dbContext.SaveChangesAsync();
             return blogPost;    
         }
+
+        public async Task<IEnumerable<BlogPost>> GetAllAsync()
+        {
+            return await this.dbContext.BlogPosts.ToListAsync();
+        }
     }
 }

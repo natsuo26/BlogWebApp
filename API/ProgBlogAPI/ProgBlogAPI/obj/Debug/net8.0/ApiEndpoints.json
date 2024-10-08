@@ -16,6 +16,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ProgBlogAPI.Controllers.BlogPostsController",
+    "Method": "GetBlogPosts",
+    "RelativePath": "api/BlogPosts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProgBlogAPI.Controllers.CategoriesController",
     "Method": "CreateCategory",
     "RelativePath": "api/Categories",
