@@ -11,5 +11,7 @@ namespace ProgBlogAPI.Repositories.Interface
         Task<BlogPost?> GetByIdAsync(Guid id);
 
         Task<BlogPost?> UpdateAsync(BlogPost blogPost);
+
+        Task<BlogPost?> DeleteAsync(Guid id);
     }
 }

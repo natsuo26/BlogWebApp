@@ -202,6 +202,31 @@ namespace ProgBlogAPI.Controllers
 
         }
 
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
+        {
+
+            var deletedBlogPost = await blogPostRepository.DeleteAsync(id);
+            if (deletedBlogPost is null)
+            {
+                return NotFound();
+            }
+            var response = new BlogPostDto
+            {
+                Id = deletedBlogPost.Id,
+                Author = deletedBlogPost.Author,
+                Title = deletedBlogPost.Title,
+                ShortDescription = deletedBlogPost.ShortDescription,
+                FeatureImageUrl = deletedBlogPost.FeatureImageUrl,
+                UrlHandle = deletedBlogPost.UrlHandle,
+                PublishedDate = deletedBlogPost.PublishedDate,
+                IsVisible = deletedBlogPost.IsVisible,
+                Content = deletedBlogPost.Content,
+            };
+            return Ok(response);
+        }
+
 
     }
 }
