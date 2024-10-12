@@ -14,15 +14,27 @@
           <th>Short Description</th>
           <th>Is Visible?</th>
           <th>Categories</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let blogPost  of blogPosts">
-          <td>{{blogPost.title}}</td>
-          <td> {{blogPost.shortDescription}} </td>
-          <td> {{blogPost.isVisible}} </td>
+        <tr *ngFor="let blogPost of blogPosts">
+          <td>{{ blogPost.title }}</td>
+          <td>{{ blogPost.shortDescription }}</td>
+          <td>{{ blogPost.isVisible }}</td>
           <td>
-            <span class="badge bg-secondary me-2" *ngFor="let category of blogPost.categories">{{category.name}}</span>
+            <span
+              class="badge bg-secondary me-2"
+              *ngFor="let category of blogPost.categories"
+              >{{ category.name }}</span
+            >
+          </td>
+          <td>
+            <a
+              class="btn btn-light"
+              [routerLink]="['/admin/blogposts', blogPost.id]"
+              >Edit</a
+            >
           </td>
         </tr>
       </tbody>

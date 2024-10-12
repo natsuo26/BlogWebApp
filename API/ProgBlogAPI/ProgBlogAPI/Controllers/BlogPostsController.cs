@@ -105,5 +105,103 @@ namespace ProgBlogAPI.Controllers
             }
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetBlogPostById([FromRoute] Guid id)
+        {
+
+
+            var blogPost = await blogPostRepository.GetByIdAsync(id);
+            if(blogPost == null)
+            {
+                return NotFound();
+            }
+            //convert domain model back to DTO;
+            var response = new BlogPostDto();
+            response = new BlogPostDto
+            {
+                Id = blogPost.Id,
+                Author = blogPost.Author,
+                Title = blogPost.Title,
+                ShortDescription = blogPost.ShortDescription,
+                FeatureImageUrl = blogPost.FeatureImageUrl,
+                UrlHandle = blogPost.UrlHandle,
+                PublishedDate = blogPost.PublishedDate,
+                IsVisible = blogPost.IsVisible,
+                Content = blogPost.Content,
+                Categories = blogPost.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle,
+
+                }).ToList()
+            };
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateBlogPost([FromRoute] Guid id, UpdateBlogPostRequestDto request)
+        {
+            //convert DTO to Domain Model
+            var blogPost = new BlogPost
+            {
+                Id = id,
+                Author = request.Author,
+                Title = request.Title,
+                ShortDescription = request.ShortDescription,
+                FeatureImageUrl = request.FeatureImageUrl,
+                UrlHandle = request.UrlHandle,
+                PublishedDate = request.PublishedDate,
+                IsVisible = request.IsVisible,
+                Content = request.Content,
+                Categories = new List<Category>()
+            };
+
+            foreach (var categoryGuid in request.Categories)
+            {
+                var existingCategory = await categoryRepository.GetById(categoryGuid);
+                if (existingCategory != null)
+                {
+                    blogPost.Categories.Add(existingCategory);
+                }
+            }
+
+            //call repository to update blogpost domain model
+            var updatedBlogPost = await blogPostRepository.UpdateAsync(blogPost);
+
+            if(updatedBlogPost == null)
+            {
+                return NotFound();
+            }
+
+            //convert Domain model back to DTO
+            var response = new BlogPostDto();
+            response = new BlogPostDto
+            {
+                Id = blogPost.Id,
+                Author = blogPost.Author,
+                Title = blogPost.Title,
+                ShortDescription = blogPost.ShortDescription,
+                FeatureImageUrl = blogPost.FeatureImageUrl,
+                UrlHandle = blogPost.UrlHandle,
+                PublishedDate = blogPost.PublishedDate,
+                IsVisible = blogPost.IsVisible,
+                Content = blogPost.Content,
+                Categories = blogPost.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle,
+
+                }).ToList()
+            };
+            return Ok(response);
+
+        }
+
+
     }
 }

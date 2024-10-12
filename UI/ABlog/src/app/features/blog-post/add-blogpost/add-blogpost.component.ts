@@ -25,6 +25,7 @@ export class AddBlogpostComponent implements OnInit,  OnDestroy {
       author: '',
       isVisible: true,
       publishedDate: new Date(),
+      categories:[]
     };
   }
   ngOnInit(): void {
