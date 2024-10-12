@@ -1,18 +1,21 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AddBlogPost } from '../models/add-blog-post.model';
 import { BlogPostService } from '../services/blog-post.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { CategoryService } from '../../category/services/category.service';
+import { Category } from '../../category/models/category.model';
 
 @Component({
   selector: 'app-add-blogpost',
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.scss',
 })
-export class AddBlogpostComponent implements OnDestroy {
+export class AddBlogpostComponent implements OnInit,  OnDestroy {
   model: AddBlogPost;
   private destroy$ = new Subject<void>();
+  categories$ = new Observable<Category[]>();
 
-  constructor(private blogPostService: BlogPostService) {
+  constructor(private blogPostService: BlogPostService, private categoryService: CategoryService) {
     this.model = {
       title: '',
       shortDescription: '',
@@ -23,6 +26,9 @@ export class AddBlogpostComponent implements OnDestroy {
       isVisible: true,
       publishedDate: new Date(),
     };
+  }
+  ngOnInit(): void {
+    this.categories$ = this.categoryService.getAllCategories();
   }
   onFormSubmit(): void {
     this.blogPostService

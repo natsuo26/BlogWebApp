@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProgBlogAPI.Models.Domain;
 using ProgBlogAPI.Models.DTO;
+using ProgBlogAPI.Repositories.Implementation;
 using ProgBlogAPI.Repositories.Interface;
 
 namespace ProgBlogAPI.Controllers
@@ -10,10 +11,14 @@ namespace ProgBlogAPI.Controllers
     [ApiController]
     public class BlogPostsController : ControllerBase
     {
-        public readonly IBlogPostRepository BlogPostRepository;
-        public BlogPostsController(IBlogPostRepository blogPostRepository)
+        public readonly IBlogPostRepository blogPostRepository;
+
+        public ICategoryRepository categoryRepository;
+
+        public BlogPostsController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository)
         {
-            BlogPostRepository = blogPostRepository;
+            this.blogPostRepository = blogPostRepository;
+            this.categoryRepository = categoryRepository;
         }
 
 
@@ -30,10 +35,20 @@ namespace ProgBlogAPI.Controllers
                 PublishedDate = request.PublishedDate,
                 IsVisible = request.IsVisible,
                 Content = request.Content,
+                Categories = new List<Category>()
 
             };
             
-            blogPost = await BlogPostRepository.CreateAsync(blogPost);
+            foreach(var categoryGuid in request.Categories)
+            {
+                var existingCategory = await categoryRepository.GetById(categoryGuid);
+                if(existingCategory != null)
+                {
+                    blogPost.Categories.Add(existingCategory);
+                }
+            }
+            
+            blogPost = await blogPostRepository.CreateAsync(blogPost);
             //convert domain model back to DTO;
             var response = new BlogPostDto
             {
@@ -46,6 +61,13 @@ namespace ProgBlogAPI.Controllers
                 PublishedDate = blogPost.PublishedDate,
                 IsVisible = blogPost.IsVisible,
                 Content = blogPost.Content,
+                Categories = blogPost.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle,
+
+                }).ToList()
             };
             return Ok(response);
         }
@@ -55,7 +77,7 @@ namespace ProgBlogAPI.Controllers
         {
 
 
-            var blogPosts = await BlogPostRepository.GetAllAsync();
+            var blogPosts = await blogPostRepository.GetAllAsync();
             //convert domain model back to DTO;
             var response = new List<BlogPostDto>();
             foreach (var blogPost in blogPosts)
@@ -71,6 +93,13 @@ namespace ProgBlogAPI.Controllers
                     PublishedDate = blogPost.PublishedDate,
                     IsVisible = blogPost.IsVisible,
                     Content = blogPost.Content,
+                    Categories = blogPost.Categories.Select(x => new CategoryDto
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        UrlHandle = x.UrlHandle,
+
+                    }).ToList()
                 });
                 
             }

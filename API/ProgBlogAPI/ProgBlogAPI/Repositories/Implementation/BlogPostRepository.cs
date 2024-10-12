@@ -22,7 +22,7 @@ namespace ProgBlogAPI.Repositories.Implementation
 
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
-            return await this.dbContext.BlogPosts.ToListAsync();
+            return await this.dbContext.BlogPosts.Include(x=>x.Categories).ToListAsync();
         }
     }
 }
