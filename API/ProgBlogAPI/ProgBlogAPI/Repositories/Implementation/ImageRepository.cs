@@ -1,4 +1,5 @@
-﻿using ProgBlogAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ProgBlogAPI.Data;
 using ProgBlogAPI.Models.Domain;
 using ProgBlogAPI.Repositories.Interface;
 
@@ -17,6 +18,10 @@ namespace ProgBlogAPI.Repositories.Implementation
             this.dbContext = applicationDbContext;
         }
 
+        public async Task<IEnumerable<BlogImage>> GetAll()
+        {
+            return await dbContext.BlogImages.ToListAsync();
+        }
 
         public async Task<BlogImage> Upload(IFormFile file, BlogImage blogImage)
         {

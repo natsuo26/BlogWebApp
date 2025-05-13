@@ -16,6 +16,30 @@ namespace ProgBlogAPI.Controllers
         {
             this.imageRepository = imageRepository;
         }
+
+        //GET: {apibaseurl}/api/images
+        [HttpGet]
+        public async Task<IActionResult> GetAllImages()
+        {
+            var images = await imageRepository.GetAll();
+            if (images == null || !images.Any())
+            {
+                return NotFound("No images found");
+            }
+            //convert domain model to DTO
+            var response = images.Select(image => new BlogImageDto
+            {
+                Id = image.Id,
+                Title = image.Title,
+                DateCreated = image.DateCreated,
+                FileExtension = image.FileExtension,
+                FileName = image.FileName,
+                Url = image.Url,
+            });
+            return Ok(response);
+
+        }
+
         //POST: {apibaseurl}/api/images
         [HttpPost]
         public async Task<IActionResult> UploadImage([FromForm]IFormFile file, [FromForm] string fileName, [FromForm] string title)
